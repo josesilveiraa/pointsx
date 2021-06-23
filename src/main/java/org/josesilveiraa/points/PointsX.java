@@ -68,11 +68,11 @@ public final class PointsX extends JavaPlugin {
         hikari = new HikariDataSource();
 
         hikari.setMaximumPoolSize(10);
-        String host = this.getConfig().getString("mysql.host");
-        String user = this.getConfig().getString("mysql.user");
-        String password = this.getConfig().getString("mysql.password");
-        String database = this.getConfig().getString("mysql.database");
-        int port = this.getConfig().getInt("mysql.port");
+        String host = getConfig().getString("mysql.host");
+        String user = getConfig().getString("mysql.user");
+        String password = getConfig().getString("mysql.password");
+        String database = getConfig().getString("mysql.database");
+        int port = getConfig().getInt("mysql.port");
 
         hikari.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database);
         hikari.setUsername(user);
