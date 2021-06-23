@@ -61,6 +61,7 @@ public final class PointsX extends JavaPlugin {
 
     private void initConfigs() {
         shopConfiguration = new Configuration(getInstance(), "shop.yml");
+        shopConfiguration.saveDefaultConfig();
     }
 
     private void initEvents() {
