@@ -1,5 +1,5 @@
-name: Points
-version: ${project.version}
+name: PointsX
+version: 1.0
 main: org.josesilveiraa.points.Points
 api-version: 1.16
 softdepend: [ PlaceholderAPI, MVdWPlaceholderAPI ]
