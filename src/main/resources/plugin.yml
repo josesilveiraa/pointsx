@@ -1,0 +1,7 @@
+name: Points
+version: ${project.version}
+main: org.josesilveiraa.points.Points
+api-version: 1.16
+softdepend: [ PlaceholderAPI, MVdWPlaceholderAPI ]
+authors: [ Josesilveiraa ]
+description: An advanced points plugin
