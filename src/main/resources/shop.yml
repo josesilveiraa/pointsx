@@ -1,0 +1,9 @@
+categories:
+  blocks:
+    slot: 10
+    item: GRASS_BLOCK
+    amount: 1
+    name: '&aBlocks'
+    lore:
+      - '&7Click to buy blocks with'
+      - '&7your &6points&7.'

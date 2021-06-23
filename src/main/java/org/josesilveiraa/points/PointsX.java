@@ -6,10 +6,13 @@ import lombok.Getter;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.josesilveiraa.points.config.Configuration;
 import org.josesilveiraa.points.command.PointsCommand;
 import org.josesilveiraa.points.listener.PlayerJoinListener;
 import org.josesilveiraa.points.listener.PlayerQuitListener;
 import org.josesilveiraa.points.manager.StorageManager;
+import org.josesilveiraa.points.manager.category.CategoryManager;
+import org.josesilveiraa.points.object.Category;
 import org.josesilveiraa.points.object.User;
 import org.josesilveiraa.points.task.AutoSaveTask;
 
@@ -30,6 +33,10 @@ public final class PointsX extends JavaPlugin {
 
     @Getter private static final HashMap<UUID, User> cache = new HashMap<>();
 
+    @Getter private static final HashMap<String, Category> categories = new HashMap<>();
+
+    @Getter private static Configuration shopConfiguration;
+
     private final PluginManager pm = getServer().getPluginManager();
 
     @Override
@@ -40,13 +47,20 @@ public final class PointsX extends JavaPlugin {
     }
 
     private void init() {
-        saveDefaultConfig();
         pluginLogger = getPluginLogger();
+
+        saveDefaultConfig();
+        initConfigs();
 
         initDatabase();
         initCommands();
         initTasks();
         initEvents();
+        initCategories();
+    }
+
+    private void initConfigs() {
+        shopConfiguration = new Configuration(getInstance(), "shop.yml");
     }
 
     private void initEvents() {
@@ -58,6 +72,10 @@ public final class PointsX extends JavaPlugin {
         commandManager = new PaperCommandManager(getInstance());
         commandManager.registerCommand(new PointsCommand());
         commandManager.enableUnstableAPI("help");
+    }
+
+    private void initCategories() {
+        CategoryManager.loadCategories();
     }
 
     private void initTasks() {

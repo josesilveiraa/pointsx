@@ -6,8 +6,15 @@ import co.aikar.commands.annotation.*;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.josesilveiraa.points.PointsX;
+import org.josesilveiraa.points.api.event.PointsAddEvent;
+import org.josesilveiraa.points.api.event.PointsPayEvent;
+import org.josesilveiraa.points.api.event.PointsRemoveEvent;
+import org.josesilveiraa.points.api.event.PointsSetEvent;
 import org.josesilveiraa.points.manager.UserManager;
 import org.josesilveiraa.points.object.User;
+
+import java.util.UUID;
 
 @CommandAlias("points|p")
 public class PointsCommand extends BaseCommand {
@@ -18,11 +25,46 @@ public class PointsCommand extends BaseCommand {
     public void onPoints(Player p, @Optional OnlinePlayer target) {
         Player toSee = target != null ? target.getPlayer() : p;
         User user = UserManager.getByUuid(toSee.getUniqueId());
+
         if (user != null) {
             p.sendMessage("§6Points: §f" + user.getPoints());
             return;
         }
+
         p.sendMessage("§cAn unknown error occurred while trying to contact the database.");
+    }
+
+    @Subcommand("pay")
+    @Syntax("<player> <points>")
+    @CommandCompletion("@players")
+    @Description("Takes the desired quantity of points from your account and send it to another player.")
+    @CommandPermission("points.command.pay")
+    public static void onPay(Player player, OnlinePlayer target, Double points) {
+
+        UUID senderUuid = player.getUniqueId();
+        UUID receiverUuid = target.getPlayer().getUniqueId();
+
+        User sender = UserManager.getByUuid(senderUuid);
+        User receiver = UserManager.getByUuid(receiverUuid);
+
+        if (receiver == null || sender == null) {
+            player.sendMessage("§cAn unknown error occurred while trying to contact the database.");
+            return;
+        }
+
+        PointsPayEvent event = new PointsPayEvent(sender, receiver, player, target.getPlayer());
+        PointsX.getInstance().getServer().getPluginManager().callEvent(event);
+
+        if(event.isCancelled()) {
+            return;
+        }
+
+        sender.removePoints(points);
+        receiver.addPoints(points);
+
+        player.sendMessage("§aYou paid §f" + points + " §apoints to §f" + target.getPlayer().getName() + "§a!");
+        target.getPlayer().sendMessage("§aYou received §f" + points + " §apoints from §f" + player.getName() + "§a!");
+
     }
 
     @Subcommand("set")
@@ -32,10 +74,19 @@ public class PointsCommand extends BaseCommand {
     @CommandPermission("points.command.set")
     public static void onSet(CommandSender sender, OnlinePlayer target, Double points) {
         User user = UserManager.getByUuid(target.getPlayer().getUniqueId());
+
         if (user == null) {
             sender.sendMessage("§cAn unknown error occurred while trying to contact the database.");
             return;
         }
+
+        PointsSetEvent event = new PointsSetEvent(sender, user, target.getPlayer());
+        PointsX.getInstance().getServer().getPluginManager().callEvent(event);
+
+        if(event.isCancelled()) {
+            return;
+        }
+
         user.setPoints(points);
         sender.sendMessage("§f" + target.getPlayer().getName() + "§a's points set to §f" + points + "§a!");
     }
@@ -45,14 +96,18 @@ public class PointsCommand extends BaseCommand {
     @CommandCompletion("@players")
     @Description("Removes the desired points amount from the target account.")
     @CommandPermission("points.command.remove")
-    public static void onRemove(CommandSender sender, Player target, Double points) {
-        User user = UserManager.getByUuid(target.getUniqueId());
+    public static void onRemove(CommandSender sender, OnlinePlayer target, Double points) {
+        User user = UserManager.getByUuid(target.getPlayer().getUniqueId());
+
         if (user == null) {
             sender.sendMessage("§cAn unknown error occurred while trying to contact the database.");
             return;
         }
+
+        PointsRemoveEvent event = new PointsRemoveEvent(sender, target.getPlayer(), user);
+
         user.removePoints(points);
-        sender.sendMessage("§aRemoved §f" + points + " §apoints from §f" + target.getName() + "§a's account.");
+        sender.sendMessage("§aRemoved §f" + points + " §apoints from §f" + target.getPlayer().getName() + "§a's account.");
     }
 
     @Subcommand("add")
@@ -62,10 +117,15 @@ public class PointsCommand extends BaseCommand {
     @CommandPermission("points.command.add")
     public static void onAdd(CommandSender sender, OnlinePlayer target, Double points) {
         User user = UserManager.getByUuid(target.getPlayer().getUniqueId());
+
         if (user == null) {
             sender.sendMessage("§cAn unknown error occurred while trying to contact the database.");
             return;
         }
+
+        PointsAddEvent event = new PointsAddEvent(sender, user, target.getPlayer());
+        PointsX.getInstance().getServer().getPluginManager().callEvent(event);
+
         user.addPoints(points);
         sender.sendMessage("§aAdded §f" + points + " §apoints from §f" + target.getPlayer().getName() + "§a's account.");
     }
