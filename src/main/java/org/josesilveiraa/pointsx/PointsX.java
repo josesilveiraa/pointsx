@@ -8,6 +8,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.josesilveiraa.pointsx.config.Configuration;
 import org.josesilveiraa.pointsx.command.PointsCommand;
+import org.josesilveiraa.pointsx.expansion.MVdWExpansion;
 import org.josesilveiraa.pointsx.expansion.PointsXExpansion;
 import org.josesilveiraa.pointsx.listener.PlayerJoinListener;
 import org.josesilveiraa.pointsx.listener.PlayerQuitListener;
@@ -58,11 +59,16 @@ public final class PointsX extends JavaPlugin {
         initTasks();
         initEvents();
         initCategories();
+        initExpansions();
     }
 
     private void initExpansions() {
         if(pluginExists("PlaceholderAPI")) {
             new PointsXExpansion().register();
+        }
+
+        if(pluginExists("MVdWPlaceholderAPI")) {
+            MVdWExpansion.register();
         }
     }
 
