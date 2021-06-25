@@ -3,7 +3,19 @@ categories:
     slot: 10
     item: GRASS_BLOCK
     amount: 1
-    name: '&aBlocks'
+    name: 'Blocks' # don't put colors here
     lore:
       - '&7Click to buy blocks with'
       - '&7your &6points&7.'
+
+items:
+  01:
+    category: 'Blocks'
+    item: DIAMOND_SWORD
+    name: '&aSword'
+    amount: 1
+    lore: []
+    enchantments:
+      - 'SHARPNESS:5' # ENCHANTMENT:LEVEL
+      - 'UNBREAKABLE:5'
+    price: 100.0

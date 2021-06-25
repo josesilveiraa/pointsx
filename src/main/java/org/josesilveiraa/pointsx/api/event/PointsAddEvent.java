@@ -1,4 +1,4 @@
-package org.josesilveiraa.points.api.event;
+package org.josesilveiraa.pointsx.api.event;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,11 +8,11 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.josesilveiraa.points.object.User;
+import org.josesilveiraa.pointsx.object.User;
 
 public class PointsAddEvent extends Event implements Cancellable {
 
-    @NotNull @Getter
+    @NotNull
     private static final HandlerList handlers = new HandlerList();
 
     @Getter @Setter
@@ -26,5 +26,14 @@ public class PointsAddEvent extends Event implements Cancellable {
         this.sender = sender;
         this.receiverUser = receiverUser;
         this.receiver = receiver;
+    }
+
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

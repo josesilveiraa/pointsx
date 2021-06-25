@@ -1,11 +1,11 @@
-package org.josesilveiraa.points.listener;
+package org.josesilveiraa.pointsx.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.josesilveiraa.points.manager.StorageManager;
-import org.josesilveiraa.points.object.User;
+import org.josesilveiraa.pointsx.manager.StorageManager;
+import org.josesilveiraa.pointsx.object.User;
 
 import java.util.UUID;
 

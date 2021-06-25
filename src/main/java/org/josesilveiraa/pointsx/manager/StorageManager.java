@@ -1,7 +1,7 @@
-package org.josesilveiraa.points.manager;
+package org.josesilveiraa.pointsx.manager;
 
-import org.josesilveiraa.points.PointsX;
-import org.josesilveiraa.points.object.User;
+import org.josesilveiraa.pointsx.PointsX;
+import org.josesilveiraa.pointsx.object.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class StorageManager {
                 double points = rs.getDouble("points");
                 User toAdd = new User(uuid, points);
 
-                PointsX.getCache().put(uuid, toAdd);
+                toAdd.load();
             }
 
             rs.close();
@@ -52,22 +52,25 @@ public class StorageManager {
 
     public static void insert(User user) {
         try(Connection connection = PointsX.getHikari().getConnection()) {
+
             PreparedStatement st = connection.prepareStatement("INSERT INTO users (uuid, points) VALUES (?, ?)");
             st.setString(1, user.getUuid().toString());
             st.setDouble(2, user.getPoints());
             st.executeUpdate();
             st.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static void createTable(String tableName, String columns) {
-
         try(Connection connection = PointsX.getHikari().getConnection()) {
+
             PreparedStatement st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `" + tableName + "` (" + columns + ")");
             st.executeUpdate();
             st.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

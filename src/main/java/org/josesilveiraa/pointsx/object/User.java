@@ -1,9 +1,9 @@
-package org.josesilveiraa.points.object;
+package org.josesilveiraa.pointsx.object;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.josesilveiraa.points.PointsX;
+import org.josesilveiraa.pointsx.PointsX;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

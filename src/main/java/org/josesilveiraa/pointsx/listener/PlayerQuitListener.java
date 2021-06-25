@@ -1,10 +1,10 @@
-package org.josesilveiraa.points.listener;
+package org.josesilveiraa.pointsx.listener;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.josesilveiraa.points.manager.UserManager;
-import org.josesilveiraa.points.object.User;
+import org.josesilveiraa.pointsx.manager.UserManager;
+import org.josesilveiraa.pointsx.object.User;
 
 public class PlayerQuitListener implements Listener {
 

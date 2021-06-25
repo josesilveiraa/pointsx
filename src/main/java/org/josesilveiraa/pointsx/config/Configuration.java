@@ -1,4 +1,4 @@
-package org.josesilveiraa.points.config;
+package org.josesilveiraa.pointsx.config;
 
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;

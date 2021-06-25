@@ -1,4 +1,4 @@
-package org.josesilveiraa.points.command;
+package org.josesilveiraa.pointsx.command;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
@@ -6,13 +6,14 @@ import co.aikar.commands.annotation.*;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.josesilveiraa.points.PointsX;
-import org.josesilveiraa.points.api.event.PointsAddEvent;
-import org.josesilveiraa.points.api.event.PointsPayEvent;
-import org.josesilveiraa.points.api.event.PointsRemoveEvent;
-import org.josesilveiraa.points.api.event.PointsSetEvent;
-import org.josesilveiraa.points.manager.UserManager;
-import org.josesilveiraa.points.object.User;
+import org.josesilveiraa.pointsx.PointsX;
+import org.josesilveiraa.pointsx.api.event.PointsAddEvent;
+import org.josesilveiraa.pointsx.api.event.PointsPayEvent;
+import org.josesilveiraa.pointsx.api.event.PointsRemoveEvent;
+import org.josesilveiraa.pointsx.api.event.PointsSetEvent;
+import org.josesilveiraa.pointsx.manager.UserManager;
+import org.josesilveiraa.pointsx.manager.shop.ShopManager;
+import org.josesilveiraa.pointsx.object.User;
 
 import java.util.UUID;
 
@@ -32,6 +33,13 @@ public class PointsCommand extends BaseCommand {
         }
 
         p.sendMessage("§cAn unknown error occurred while trying to contact the database.");
+    }
+
+    @Subcommand("shop")
+    @Description("Opens the shop menu.")
+    @CommandPermission("points.command.shop")
+    public static void onShop(Player player) {
+        ShopManager.openGui(player);
     }
 
     @Subcommand("pay")

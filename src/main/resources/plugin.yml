@@ -1,6 +1,6 @@
 name: PointsX
 version: 1.0
-main: org.josesilveiraa.points.Points
+main: org.josesilveiraa.pointsx.PointsX
 api-version: 1.16
 softdepend: [ PlaceholderAPI, MVdWPlaceholderAPI ]
 authors: [ Josesilveiraa ]

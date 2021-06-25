@@ -1,35 +1,39 @@
-package org.josesilveiraa.points.api.event;
+package org.josesilveiraa.pointsx.api.event;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.josesilveiraa.points.object.User;
+import org.josesilveiraa.pointsx.object.User;
 
-public class PointsPayEvent extends Event implements Cancellable {
+public class PointsSetEvent extends Event implements Cancellable {
 
-    @NotNull @Getter
+    @NotNull
     private static final HandlerList handlers = new HandlerList();
+
+    @Getter private final CommandSender sender;
+    @Getter private final User receiverUser;
+    @Getter private final Player receiver;
 
     @Getter @Setter
     private boolean cancelled;
 
-    @Getter private final User senderUser;
-    @Getter private final User receiverUser;
-    @Getter private final Player player;
-    @Getter private final Player receiver;
-
-    public PointsPayEvent(User senderUser, User receiverUser, Player player, Player receiver) {
-        this.senderUser = senderUser;
+    public PointsSetEvent(CommandSender sender, User receiverUser, Player receiver) {
+        this.sender = sender;
         this.receiverUser = receiverUser;
-        this.player = player;
         this.receiver = receiver;
     }
 
     public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    @Override
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 }

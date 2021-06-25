@@ -1,4 +1,4 @@
-package org.josesilveiraa.points;
+package org.josesilveiraa.pointsx;
 
 import co.aikar.commands.PaperCommandManager;
 import com.zaxxer.hikari.HikariDataSource;
@@ -6,15 +6,15 @@ import lombok.Getter;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.josesilveiraa.points.config.Configuration;
-import org.josesilveiraa.points.command.PointsCommand;
-import org.josesilveiraa.points.listener.PlayerJoinListener;
-import org.josesilveiraa.points.listener.PlayerQuitListener;
-import org.josesilveiraa.points.manager.StorageManager;
-import org.josesilveiraa.points.manager.category.CategoryManager;
-import org.josesilveiraa.points.object.Category;
-import org.josesilveiraa.points.object.User;
-import org.josesilveiraa.points.task.AutoSaveTask;
+import org.josesilveiraa.pointsx.config.Configuration;
+import org.josesilveiraa.pointsx.command.PointsCommand;
+import org.josesilveiraa.pointsx.listener.PlayerJoinListener;
+import org.josesilveiraa.pointsx.listener.PlayerQuitListener;
+import org.josesilveiraa.pointsx.manager.StorageManager;
+import org.josesilveiraa.pointsx.manager.category.CategoryManager;
+import org.josesilveiraa.pointsx.object.Category;
+import org.josesilveiraa.pointsx.object.User;
+import org.josesilveiraa.pointsx.task.AutoSaveTask;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -47,7 +47,7 @@ public final class PointsX extends JavaPlugin {
     }
 
     private void init() {
-        pluginLogger = getPluginLogger();
+        pluginLogger = getLogger();
 
         saveDefaultConfig();
         initConfigs();
@@ -108,6 +108,8 @@ public final class PointsX extends JavaPlugin {
     public void onDisable() {
         HandlerList.unregisterAll();
         getServer().getScheduler().cancelTasks(getInstance());
+
+        getHikari().close();
 
         getPluginLogger().log(Level.INFO, "Disabled successfully.");
     }

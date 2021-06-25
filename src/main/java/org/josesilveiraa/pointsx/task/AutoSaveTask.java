@@ -1,7 +1,7 @@
-package org.josesilveiraa.points.task;
+package org.josesilveiraa.pointsx.task;
 
 import org.bukkit.scheduler.BukkitRunnable;
-import org.josesilveiraa.points.PointsX;
+import org.josesilveiraa.pointsx.PointsX;
 
 public class AutoSaveTask extends BukkitRunnable {
     @Override
