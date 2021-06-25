@@ -3,10 +3,8 @@ package org.josesilveiraa.pointsx.manager.category;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.josesilveiraa.pointsx.PointsX;
@@ -43,7 +41,7 @@ public class CategoryManager {
             meta.lore(lore);
             itemStack.setItemMeta(meta);
 
-            Category category = new Category(key, itemStack, x, y, new ChestGui(5, name));
+            Category category = new Category(name, itemStack, x, y, new ChestGui(5, name));
             PointsX.getCategories().put(key, category);
         });
     }
@@ -60,17 +58,13 @@ public class CategoryManager {
 
             boolean executeCommands = CONFIG.getBoolean("items." + key + ".execute-commands");
             boolean addToInventory = CONFIG.getBoolean("items." + key + ".add-item-to-inventory");
-
             String itemCat = CONFIG.getString("items." + key + ".category");
             String name = CONFIG.getString("items." + key + ".name").replace("&", "§");
             double price = CONFIG.getDouble("items." + key + ".price");
-
             List<String> lore = CONFIG.getStringList("items." + key + ".lore").stream().map(it -> it.replace("&", "§").replace("{price}", String.valueOf(price))).collect(Collectors.toList());
             List<String> enchantments = CONFIG.getStringList("items." + key + ".enchantments");
             List<String> commands = CONFIG.getStringList("items." + key + ".commands").stream().map(it -> it.replace("{name}", name)).collect(Collectors.toList());
-
             Material material = Material.valueOf(CONFIG.getString("items." + key + ".item"));
-
             int amount = CONFIG.getInt("items." + key + ".amount");
             int x = CONFIG.getInt("items." + key + ".x");
             int y = CONFIG.getInt("items." + key + ".y");
@@ -79,13 +73,11 @@ public class CategoryManager {
                     .withName(name)
                     .withLore(lore);
 
-//            for(String enchantment : enchantments) {
-//                String enchName = enchantment.split(":")[0];
-//                int level = Integer.parseInt(enchantment.split(":")[1]);
-//                itemBuilder.addEnchantment(Enchantment.getByName(enchantment), level);
-//            }
+            // TODO fix enchantments bug
 
-            toReturn.add(new ShopItem(itemBuilder.toItemStack(), x, y, price, executeCommands, addToInventory, commands));
+            if(itemCat.equals(id)) {
+                toReturn.add(new ShopItem(itemBuilder.toItemStack(), x, y, price, executeCommands, addToInventory, commands));
+            }
         });
 
         return toReturn;

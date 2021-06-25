@@ -1,20 +1,49 @@
 categories:
   blocks:
-    slot: 10
+    x: 1
+    y: 1
     item: GRASS_BLOCK
     amount: 1
-    name: 'Blocks' # don't put colors here
+    name: 'Blocks'
     lore:
       - '&7Click to buy blocks with'
+      - '&7your &6points&7.'
+  weapons:
+    x: 2
+    y: 1
+    item: DIAMOND_SWORD
+    amount: 1
+    name: 'Weapons'
+    lore:
+      - '&7Click here to buy &aweapons &7with'
       - '&7your &6points&7.'
 
 items:
   01:
     category: 'Blocks'
+    item: DIAMOND_BLOCK
+    name: '&aRich block'
+    x: 1
+    y: 1
+    amount: 1
+    lore:
+      - '&7Buy it if you are a rich player.'
+    enchantments:
+      - 'SHARPNESS:5' # ENCHANTMENT:LEVEL
+      - 'UNBREAKABLE:5'
+    price: 10000.0
+    add-item-to-inventory: true
+    execute-commands: false
+    commands: []
+  02:
+    category: 'Weapons'
     item: DIAMOND_SWORD
     name: '&aSword'
+    x: 1
+    y: 1
     amount: 1
-    lore: []
+    lore:
+      - '&7OP sword.'
     enchantments:
       - 'SHARPNESS:5' # ENCHANTMENT:LEVEL
       - 'UNBREAKABLE:5'

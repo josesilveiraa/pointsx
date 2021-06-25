@@ -15,10 +15,13 @@ import org.josesilveiraa.pointsx.manager.UserManager;
 import org.josesilveiraa.pointsx.manager.shop.ShopManager;
 import org.josesilveiraa.pointsx.object.User;
 
+import java.text.DecimalFormat;
 import java.util.UUID;
 
 @CommandAlias("points|p")
 public class PointsCommand extends BaseCommand {
+
+    DecimalFormat df = new DecimalFormat("#.0");
 
     @Default
     @CommandCompletion("@players")
@@ -28,7 +31,7 @@ public class PointsCommand extends BaseCommand {
         User user = UserManager.getByUuid(toSee.getUniqueId());
 
         if (user != null) {
-            p.sendMessage("§6Points: §f" + user.getPoints());
+            p.sendMessage("§6Points: §f" + df.format(user.getPoints()));
             return;
         }
 
