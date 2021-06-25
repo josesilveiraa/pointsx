@@ -1,5 +1,6 @@
 package org.josesilveiraa.pointsx.manager;
 
+import org.bukkit.entity.Player;
 import org.josesilveiraa.pointsx.PointsX;
 import org.josesilveiraa.pointsx.object.User;
 
@@ -14,6 +15,12 @@ public class UserManager {
             return PointsX.getCache().get(uuid);
         }
         return null;
+    }
+
+    @Nullable
+    public static User getByPlayer(Player player) {
+        UUID uuid = player.getUniqueId();
+        return getByUuid(uuid);
     }
 
 }
