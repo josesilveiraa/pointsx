@@ -8,6 +8,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.josesilveiraa.pointsx.config.Configuration;
 import org.josesilveiraa.pointsx.command.PointsCommand;
+import org.josesilveiraa.pointsx.expansion.PointsXExpansion;
 import org.josesilveiraa.pointsx.listener.PlayerJoinListener;
 import org.josesilveiraa.pointsx.listener.PlayerQuitListener;
 import org.josesilveiraa.pointsx.manager.StorageManager;
@@ -59,6 +60,12 @@ public final class PointsX extends JavaPlugin {
         initCategories();
     }
 
+    private void initExpansions() {
+        if(pluginExists("PlaceholderAPI")) {
+            new PointsXExpansion().register();
+        }
+    }
+
     private void initConfigs() {
         shopConfiguration = new Configuration(getInstance(), "shop.yml");
         shopConfiguration.saveDefaultConfig();
@@ -102,6 +109,10 @@ public final class PointsX extends JavaPlugin {
 
         StorageManager.createTable("users", "uuid varchar(36), points double");
         StorageManager.loadUsers();
+    }
+
+    private boolean pluginExists(String pluginName) {
+        return pm.getPlugin(pluginName) != null;
     }
 
     @Override

@@ -11,6 +11,7 @@ import org.josesilveiraa.pointsx.api.event.PointsAddEvent;
 import org.josesilveiraa.pointsx.api.event.PointsPayEvent;
 import org.josesilveiraa.pointsx.api.event.PointsRemoveEvent;
 import org.josesilveiraa.pointsx.api.event.PointsSetEvent;
+import org.josesilveiraa.pointsx.manager.EventDispatcher;
 import org.josesilveiraa.pointsx.manager.UserManager;
 import org.josesilveiraa.pointsx.manager.shop.ShopManager;
 import org.josesilveiraa.pointsx.object.User;
@@ -64,7 +65,7 @@ public class PointsCommand extends BaseCommand {
         }
 
         PointsPayEvent event = new PointsPayEvent(sender, receiver, player, target.getPlayer());
-        PointsX.getInstance().getServer().getPluginManager().callEvent(event);
+        EventDispatcher.dispatch(event);
 
         if(event.isCancelled()) {
             return;
@@ -92,7 +93,7 @@ public class PointsCommand extends BaseCommand {
         }
 
         PointsSetEvent event = new PointsSetEvent(sender, user, target.getPlayer());
-        PointsX.getInstance().getServer().getPluginManager().callEvent(event);
+        EventDispatcher.dispatch(event);
 
         if(event.isCancelled()) {
             return;
@@ -135,7 +136,7 @@ public class PointsCommand extends BaseCommand {
         }
 
         PointsAddEvent event = new PointsAddEvent(sender, user, target.getPlayer());
-        PointsX.getInstance().getServer().getPluginManager().callEvent(event);
+        EventDispatcher.dispatch(event);
 
         user.addPoints(points);
         sender.sendMessage("§aAdded §f" + points + " §apoints from §f" + target.getPlayer().getName() + "§a's account.");

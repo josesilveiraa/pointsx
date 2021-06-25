@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.josesilveiraa.pointsx.PointsX;
+import org.josesilveiraa.pointsx.api.event.UserSaveEvent;
+import org.josesilveiraa.pointsx.manager.EventDispatcher;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,6 +44,9 @@ public class User {
 
             st.executeUpdate();
             st.close();
+
+            UserSaveEvent event = new UserSaveEvent(this);
+            EventDispatcher.dispatch(event);
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -6,7 +6,9 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.josesilveiraa.pointsx.PointsX;
+import org.josesilveiraa.pointsx.api.event.ShopBuyItemEvent;
 import org.josesilveiraa.pointsx.api.event.ShopOpenEvent;
+import org.josesilveiraa.pointsx.manager.EventDispatcher;
 import org.josesilveiraa.pointsx.manager.UserManager;
 import org.josesilveiraa.pointsx.manager.category.CategoryManager;
 import org.josesilveiraa.pointsx.object.Category;
@@ -24,13 +26,13 @@ public final class ShopManager {
         ChestGui gui = new ChestGui(5, "Shop");
 
         ShopOpenEvent shopOpenEvent = new ShopOpenEvent(player, gui);
-        PointsX.getInstance().getServer().getPluginManager().callEvent(shopOpenEvent);
+        EventDispatcher.dispatch(shopOpenEvent);
 
         if(shopOpenEvent.isCancelled()) {
             return;
         }
 
-        gui.setOnGlobalClick((event) -> event.setCancelled(true));
+        gui.setOnGlobalClick(event -> event.setCancelled(true));
 
         StaticPane staticPane = new StaticPane(0, 0, 9, 5);
 
@@ -67,7 +69,16 @@ public final class ShopManager {
         for(ShopItem shopItem : CategoryManager.getItemsFromCategory(category)) {
             staticPane.addItem(new GuiItem(shopItem.getItemStack(), e -> {
 
-                if(!user.hasPoints(shopItem.getPrice())) {
+                boolean hasPoints = user.hasPoints(shopItem.getPrice());
+
+                ShopBuyItemEvent event = new ShopBuyItemEvent(player, shopItem.getItemStack(), shopItem, hasPoints);
+                EventDispatcher.dispatch(event);
+
+                if(event.isCancelled()) {
+                    return;
+                }
+
+                if(!hasPoints) {
                     player.closeInventory();
                     player.sendMessage("§cYou don't have enough points to afford this item.");
                     return;
