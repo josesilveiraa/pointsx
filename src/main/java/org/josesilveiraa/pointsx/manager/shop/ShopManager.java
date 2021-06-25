@@ -6,6 +6,7 @@ import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.josesilveiraa.pointsx.PointsX;
+import org.josesilveiraa.pointsx.api.event.ShopOpenEvent;
 import org.josesilveiraa.pointsx.manager.UserManager;
 import org.josesilveiraa.pointsx.manager.category.CategoryManager;
 import org.josesilveiraa.pointsx.object.Category;
@@ -18,7 +19,16 @@ import java.util.stream.Collectors;
 public final class ShopManager {
 
     public static void openGui(@NotNull Player player) {
+
+
         ChestGui gui = new ChestGui(5, "Shop");
+
+        ShopOpenEvent shopOpenEvent = new ShopOpenEvent(player, gui);
+        PointsX.getInstance().getServer().getPluginManager().callEvent(shopOpenEvent);
+
+        if(shopOpenEvent.isCancelled()) {
+            return;
+        }
 
         gui.setOnGlobalClick((event) -> event.setCancelled(true));
 
@@ -36,7 +46,6 @@ public final class ShopManager {
         gui.addPane(staticPane);
 
         staticPane.setVisible(true);
-
 
         gui.show(player);
     }

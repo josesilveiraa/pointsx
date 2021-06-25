@@ -121,7 +121,7 @@ public class PointsCommand extends BaseCommand {
         sender.sendMessage("§aRemoved §f" + points + " §apoints from §f" + target.getPlayer().getName() + "§a's account.");
     }
 
-    @Subcommand("add")
+    @Subcommand("add|give")
     @Syntax("<player> <points>")
     @CommandCompletion("@players")
     @Description("Adds the desired points amount to the target account.")

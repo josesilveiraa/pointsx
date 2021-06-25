@@ -3,8 +3,10 @@ package org.josesilveiraa.pointsx.manager.category;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.josesilveiraa.pointsx.PointsX;
@@ -15,6 +17,7 @@ import org.josesilveiraa.pointsx.util.ItemBuilder;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class CategoryManager {
@@ -73,7 +76,13 @@ public class CategoryManager {
                     .withName(name)
                     .withLore(lore);
 
-            // TODO fix enchantments bug
+
+            for(String enchantment : enchantments) {
+                String enchantmentName = enchantment.split(":")[0];
+                int level = Integer.parseInt(enchantment.split(":")[1]);
+
+                itemBuilder.addEnchantment(Enchantment.getByKey(NamespacedKey.minecraft(enchantmentName.toLowerCase())), level);
+            }
 
             if(itemCat.equals(id)) {
                 toReturn.add(new ShopItem(itemBuilder.toItemStack(), x, y, price, executeCommands, addToInventory, commands));

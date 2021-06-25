@@ -28,9 +28,8 @@ items:
     amount: 1
     lore:
       - '&7Buy it if you are a rich player.'
-    enchantments:
-      - 'SHARPNESS:5' # ENCHANTMENT:LEVEL
-      - 'UNBREAKABLE:5'
+    enchantments: # use vanilla names like sharpness, protection... (ENCHANTMENT:LEVEL)
+      - 'SHARPNESS:5'
     price: 10000.0
     add-item-to-inventory: true
     execute-commands: false
@@ -44,9 +43,8 @@ items:
     amount: 1
     lore:
       - '&7OP sword.'
-    enchantments:
-      - 'SHARPNESS:5' # ENCHANTMENT:LEVEL
-      - 'UNBREAKABLE:5'
+    enchantments: # use vanilla names like sharpness, protection... (ENCHANTMENT:LEVEL)
+      - 'SHARPNESS:5'
     price: 100.0
     add-item-to-inventory: true
     execute-commands: true
