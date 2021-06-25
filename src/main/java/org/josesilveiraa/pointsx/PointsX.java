@@ -109,6 +109,7 @@ public final class PointsX extends JavaPlugin {
         HandlerList.unregisterAll();
         getServer().getScheduler().cancelTasks(getInstance());
 
+        getCache().forEach(((uuid, user) -> user.save()));
         getHikari().close();
 
         getPluginLogger().log(Level.INFO, "Disabled successfully.");

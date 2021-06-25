@@ -19,3 +19,7 @@ items:
       - 'SHARPNESS:5' # ENCHANTMENT:LEVEL
       - 'UNBREAKABLE:5'
     price: 100.0
+    add-item-to-inventory: true
+    execute-commands: true
+    commands:
+      - 'say {player_name} bought a {name}'

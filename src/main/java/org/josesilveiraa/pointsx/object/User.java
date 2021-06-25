@@ -24,6 +24,10 @@ public class User {
         setPoints(getPoints() + points);
     }
 
+    public boolean hasPoints(double points) {
+        return getPoints() >= points;
+    }
+
     public void load() {
         PointsX.getCache().put(getUuid(), this);
     }

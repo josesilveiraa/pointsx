@@ -58,12 +58,16 @@ public class CategoryManager {
 
         section.getKeys(false).forEach(key -> {
 
+            boolean executeCommands = CONFIG.getBoolean("items." + key + ".execute-commands");
+            boolean addToInventory = CONFIG.getBoolean("items." + key + ".add-item-to-inventory");
+
             String itemCat = CONFIG.getString("items." + key + ".category");
             String name = CONFIG.getString("items." + key + ".name").replace("&", "§");
             double price = CONFIG.getDouble("items." + key + ".price");
 
             List<String> lore = CONFIG.getStringList("items." + key + ".lore").stream().map(it -> it.replace("&", "§").replace("{price}", String.valueOf(price))).collect(Collectors.toList());
-            List<String> enchantments = CONFIG.getStringList("items." + key + ".enchantments").stream().map(it -> it.replace("&", "§")).collect(Collectors.toList());
+            List<String> enchantments = CONFIG.getStringList("items." + key + ".enchantments");
+            List<String> commands = CONFIG.getStringList("items." + key + ".commands").stream().map(it -> it.replace("{name}", name)).collect(Collectors.toList());
 
             Material material = Material.valueOf(CONFIG.getString("items." + key + ".item"));
 
@@ -81,7 +85,7 @@ public class CategoryManager {
 //                itemBuilder.addEnchantment(Enchantment.getByName(enchantment), level);
 //            }
 
-            toReturn.add(new ShopItem(itemBuilder.toItemStack(), x, y));
+            toReturn.add(new ShopItem(itemBuilder.toItemStack(), x, y, price, executeCommands, addToInventory, commands));
         });
 
         return toReturn;
@@ -89,7 +93,7 @@ public class CategoryManager {
 
     @Nullable
     public static Category getByIdentification(String id) {
-        if(PointsX.getCategories().containsKey(id)) {
+        if (PointsX.getCategories().containsKey(id)) {
             return PointsX.getCategories().get(id);
         }
         return null;
