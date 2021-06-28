@@ -1,4 +1,4 @@
-package org.josesilveiraa.pointsx.util;
+package org.josesilveiraa.volcano.item;
 
 import lombok.Setter;
 import net.kyori.adventure.text.Component;

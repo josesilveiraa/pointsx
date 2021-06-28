@@ -4,7 +4,8 @@ categories:
     y: 1
     item: GRASS_BLOCK
     amount: 1
-    name: 'Blocks'
+    name: 'Blocks' # display name without colors
+    display-name: '&aBlocks'
     lore:
       - '&7Click to buy blocks with'
       - '&7your &6points&7.'
@@ -14,6 +15,7 @@ categories:
     item: DIAMOND_SWORD
     amount: 1
     name: 'Weapons'
+    display-name: '&aWeapons'
     lore:
       - '&7Click here to buy &aweapons &7with'
       - '&7your &6points&7.'

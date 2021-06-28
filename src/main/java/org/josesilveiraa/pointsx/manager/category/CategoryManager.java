@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.josesilveiraa.pointsx.PointsX;
 import org.josesilveiraa.pointsx.object.Category;
 import org.josesilveiraa.pointsx.object.ShopItem;
-import org.josesilveiraa.pointsx.util.ItemBuilder;
+import org.josesilveiraa.volcano.item.ItemBuilder;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -34,16 +34,17 @@ public class CategoryManager {
             int amount = CONFIG.getInt("categories." + key + ".amount");
             Material item = Material.valueOf(CONFIG.getString("categories." + key + ".item"));
             String name = CONFIG.getString("categories." + key + ".name");
+            String displayName = CONFIG.getString("categories." + key + ".display-name").replace("&", "§");
             List<Component> lore = CONFIG.getStringList("categories." + key + ".lore").stream().map(it -> Component.text(it.replace("&", "§"))).collect(Collectors.toList());
 
             ItemStack itemStack = new ItemStack(item, amount);
 
             ItemMeta meta = itemStack.getItemMeta();
-            meta.displayName(Component.text(name));
+            meta.displayName(Component.text(displayName));
             meta.lore(lore);
             itemStack.setItemMeta(meta);
 
-            Category category = new Category(name, itemStack, x, y, new ChestGui(5, name));
+            Category category = new Category(displayName, name, itemStack, x, y, new ChestGui(5, name));
             PointsX.getCategories().put(key, category);
         });
     }

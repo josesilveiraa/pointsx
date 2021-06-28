@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 @Getter @Setter @AllArgsConstructor
 public class Category {
 
+    private String displayName;
     private String identification;
     private ItemStack itemStack;
     private int x;
